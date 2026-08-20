@@ -18,8 +18,13 @@ A super simple FastAPI application that allows students to view and sign up for 
 2. Run the application:
 
    ```
-   python app.py
+   uvicorn app:app --reload
    ```
+
+   The SQLite database is created at `src/activities.db` on first startup. To
+   use another location, set `ACTIVITIES_DB_PATH` before starting the server.
+   Delete the database file to reset local activity and registration data; the
+   built-in activities are seeded again on the next startup.
 
 3. Open your browser and go to:
    - API documentation: http://localhost:8000/docs
@@ -47,4 +52,6 @@ The application uses a simple data model with meaningful identifiers:
    - Name
    - Grade level
 
-All data is stored in memory, which means data will be reset when the server restarts.
+Activities and registrations are stored in SQLite and survive application
+restarts. The initial activities and registrations are seeded the first time
+the database is created.

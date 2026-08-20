@@ -8,6 +8,14 @@
   </head>
   <body>
     <header>
+      <div class="account-controls">
+        <button id="account-button" type="button" aria-expanded="false" aria-controls="login-panel">&#128100; Account</button>
+        <div id="login-panel" class="login-panel hidden">
+          <button id="login-button" type="button">Teacher login</button>
+          <button id="logout-button" class="hidden" type="button">Log out</button>
+          <span id="login-status" aria-live="polite"></span>
+        </div>
+      </div>
       <h1>Mergington High School</h1>
       <h2>Extracurricular Activities</h2>
     </header>
@@ -23,7 +31,7 @@
 
       <section id="signup-container">
         <h3>Sign Up for an Activity</h3>
-        <form id="signup-form">
+        <form id="signup-form" class="teacher-only">
           <div class="form-group">
             <label for="email">Student Email:</label>
             <input type="email" id="email" required placeholder="your-email@mergington.edu" />
