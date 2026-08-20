@@ -61,6 +61,48 @@ header h1 {
   margin-bottom: 10px;
 }
 
+.announcement-banner {
+  background-color: #4caf50;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+}
+
+.announcement-label {
+  margin-bottom: 3px;
+  color: #8d4e00;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.announcement-banner h3 {
+  margin-bottom: 4px;
+  color: #5d4037;
+  font-size: 18px;
+}
+
+.announcement-banner p:last-child {
+  margin: 0;
+}
+
+.announcement-banner a {
+  flex-shrink: 0;
+  color: #1a237e;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+@media (max-width: 540px) {
+  .announcement-banner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 main {
   display: flex;
   flex-wrap: wrap;
