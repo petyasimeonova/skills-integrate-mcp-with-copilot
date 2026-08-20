@@ -16,12 +16,45 @@ body {
 }
 
 header {
+  position: relative;
   text-align: center;
   padding: 20px 0;
   margin-bottom: 30px;
   background-color: #1a237e;
   color: white;
   border-radius: 5px;
+}
+
+.account-controls {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.account-controls button {
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.login-panel {
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-width: 150px;
+  margin-top: 8px;
+  padding: 10px;
+  background: white;
+  color: #333;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.login-panel span {
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 header h1 {

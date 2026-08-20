@@ -3,6 +3,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const activitySelect = document.getElementById("activity");
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
+  const accountButton = document.getElementById("account-button");
+  const loginPanel = document.getElementById("login-panel");
+  const loginButton = document.getElementById("login-button");
+  const logoutButton = document.getElementById("logout-button");
+  const loginStatus = document.getElementById("login-status");
+  let accessToken = null;
+
+  function authHeaders() {
+    return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+  }
+
+  function updateLoginState() {
+    const loggedIn = Boolean(accessToken);
+    signupForm.classList.toggle("hidden", !loggedIn);
+    document.querySelectorAll(".delete-btn").forEach((button) => {
+      button.classList.toggle("hidden", !loggedIn);
+    });
+    loginButton.classList.toggle("hidden", loggedIn);
+    logoutButton.classList.toggle("hidden", !loggedIn);
+    loginStatus.textContent = loggedIn ? "Teacher mode" : "Student view";
+  }
 
   // Function to fetch activities from API
   async function fetchActivities() {
@@ -80,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         )}/unregister?email=${encodeURIComponent(email)}`,
         {
           method: "DELETE",
+          headers: authHeaders(),
         }
       );
 
@@ -124,6 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
         )}/signup?email=${encodeURIComponent(email)}`,
         {
           method: "POST",
+          headers: authHeaders(),
         }
       );
 
@@ -155,6 +178,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  accountButton.addEventListener("click", () => {
+    const isHidden = loginPanel.classList.toggle("hidden");
+    accountButton.setAttribute("aria-expanded", String(!isHidden));
+  });
+
+  loginButton.addEventListener("click", async () => {
+    const username = window.prompt("Teacher username:");
+    if (!username) return;
+    const password = window.prompt("Teacher password:");
+    if (!password) return;
+
+    const response = await fetch("/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      loginStatus.textContent = result.detail || "Login failed";
+      return;
+    }
+    accessToken = result.access_token;
+    updateLoginState();
+  });
+
+  logoutButton.addEventListener("click", () => {
+    accessToken = null;
+    updateLoginState();
+  });
+
   // Initialize app
+  updateLoginState();
   fetchActivities();
 });
